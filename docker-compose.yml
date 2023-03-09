@@ -1,0 +1,11 @@
+version: "3.9"
+
+services:
+  php:
+    build:
+      context: .
+    restart: unless-stopped
+    working_dir: /srv/api
+    volumes:
+      - ./:/srv/api
+    tty: true

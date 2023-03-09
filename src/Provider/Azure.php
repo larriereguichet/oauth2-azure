@@ -84,7 +84,8 @@ class Azure extends AbstractProvider
         if (!array_key_exists($version, $this->openIdConfiguration[$tenant])) {
             $versionInfix = $this->getVersionUriInfix($version);
 	          $openIdConfigurationUri = $this->urlLogin . $tenant . $versionInfix . '/.well-known/openid-configuration?appid=' . $this->clientId;
-            
+
+              var_dump($openIdConfigurationUri);
             $factory = $this->getRequestFactory();
             $request = $factory->getRequestWithOptions(
                 'get',
@@ -355,6 +356,9 @@ class Azure extends AbstractProvider
             throw new \RuntimeException('The client_id / audience is invalid!');
         }
 
+        var_dump(date('c', $timestamp));
+        var_dump(date('c', $tokenClaims['exp']));
+        var_dump(date('c', $tokenClaims['exp']));
         if ($tokenClaims['nbf'] > ($timestamp + JWT::$leeway) || $tokenClaims['exp'] < ($timestamp - JWT::$leeway)) {
             // Additional validation is being performed in firebase/JWT itself
             throw new \RuntimeException('The id_token is invalid!');
@@ -414,7 +418,7 @@ class Azure extends AbstractProvider
                     }
 
                     $publicKey = $pkey_array ['key'];
-
+var_dump($keyinfo['kid']);
                     $keys[$keyinfo['kid']] = new Key($publicKey, 'RS256');
                 }
             } else if (isset($keyinfo['n']) && isset($keyinfo['e'])) {
